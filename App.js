@@ -1,44 +1,82 @@
 import React from 'react'
-import { View, Platform } from 'react-native'
-import { TabNavigator, createStackNavigator } from 'react-navigation'
-import { blackOlive, white } from './utils/colors'
+import { View, Platform, StatusBar } from 'react-native'
+import { Icon } from 'react-native-elements'
+import { TabNavigator, createStackNavigator, createBottomTabNavigator, HeaderBackButton} from 'react-navigation'
+import { blackOlive, white, green } from './utils/colors'
 import { Constants } from 'expo'
 import Flashcard from './components/flashcard'
 import Decklist from './components/decklist'
 import Deck from './components/deck'
 import Quiz from './components/quiz'
 import Score from './components/score'
+import AddCard from './components/AddCard'
+import AddDeck from './components/AddDeck'
 
-
-const cards = [
-{
-  question: "who am I?",
-  answer: "Andrew"
-},
-{
-  question: "is this fun?",
-  answer: "yeah, actually!"
+function MyStatusBar ({backgroundColor, ...props}) {
+  return (
+    <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
+      <StatusBar translucent backgroundColor={backgroundColor} {...props} />
+    </View>
+  )
 }
-]
 
-const deck = "this deck"
-
-const Stack = createStackNavigator({
+const DeckStack = createStackNavigator({
   Decklist: {
     screen: Decklist
   },
   Deck: {
     screen: Deck
+  },
+  Quiz: {
+    screen: Quiz
+  },
+  Score: {
+    screen: Score
+  },
+  AddCard: {
+    screen: AddCard
+  }
+})
+
+const Tab = createBottomTabNavigator({
+  Home: {
+    screen: DeckStack,
+    navigationOptions: {
+        tabBarLabel:"Decks",
+        tabBarIcon: <Icon name="home" size={30} color="#900" />,
+        headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />
+
+        }
+  },
+  AddDeck: {
+    screen: AddDeck,
+    navigationOptions: {
+      tabBarLabel: "Add Deck",
+      tabBarIcon: <Icon name="add" size={30} color="#900" />
+    }
   }
 },
-{
-  initialRouteName: "Decklist"
-})
+  {
+    order: ['Home', 'AddDeck'],
+    tabBarOptions: {
+      activeTintColor: '#D4AF37',
+      inactiveTintColor: 'gray',
+      style: {
+        backgroundColor: 'white',
+      }
+    },
+  }
+
+
+)
 
 export default class App extends React.Component {
   render() {
     return (
-      <Stack />
+      <View style={{flex: 1}}>
+      <MyStatusBar backgroundColor={green} barStyle="light-content" />
+      <Tab />
+      </View>
     )
   }
 }

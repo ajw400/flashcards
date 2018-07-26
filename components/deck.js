@@ -17,10 +17,12 @@ export default class Deck extends Component {
           <Button
             backgroundColor={oliveBlack}
             title="Start Quiz"
+            onPress={() => navigation.navigate('Quiz', { deck: deck })}
           />
           <Button
               backgroundColor={green}
               title="Add Card"
+              onPress={() => navigation.navigate('AddCard', { deckId: deck.id })}
          />
       </View>
       )

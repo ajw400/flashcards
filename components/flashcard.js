@@ -30,8 +30,8 @@ export default class Flashcard extends Component {
     const { flipped } = this.state
     return (
       <View style={styles.center}>
-        <Card title={deck}>
-          <Text style={styles.remaining}>{remaining} cards remaining</Text>
+        <Card title={deck.title}>
+          <Text style={styles.remaining}>{remaining} card(s) remaining</Text>
           <View style={styles.spacerStyle} />
           <Text style={styles.CardText}>{ flipped ? answer : question }</Text>
           <View style = {styles.lineStyle} />
@@ -43,12 +43,12 @@ export default class Flashcard extends Component {
           />
           <Button
               backgroundColor={green}
-              onPress={this.onFalse}
+              onPress={this.onCorrect}
               title="Correct"
           />
           <Button
             backgroundColor={red}
-            onPress={this.onCorrect}
+            onPress={this.onFalse}
             title="Incorrect"
           />
 

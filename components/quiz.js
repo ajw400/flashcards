@@ -7,29 +7,45 @@ export default class Quiz extends Component{
     this.state = {
       cardIndex: 0,
       right: 0,
-      wrong: 0
+      wrong: 0,
+      deck: {}
     }
 
     this.next = this.next.bind(this)
+    this.setIndex = this.setIndex.bind(this)
+  }
+
+  setIndex() {
+    const i = this.state.cardIndex + 1
+    if (i < this.state.deck.cards.length) {
+      this.setState({cardIndex: i})
+    } else {
+      score = this.state.right.toFixed(2) * 100 / this.state.deck.cards.length
+      console.log(score)
+      this.props.navigation.navigate('Score', { score: score })
+    }
   }
 
   next(correct) {
     if (correct) {
-      this.setState({ right: this.state.right + 1 })
+      console.log("correct")
+      right = this.state.right + 1
+      this.setState({ right: right }, this.setIndex)
     } else {
-      this.setState({ wrong: this.state.wrong + 1 })
-    }
-    i = this.state.cardIndex + 1
-    if (i < this.props.cards.length) {
-      this.setState({cardIndex: i})
-    } else {
-      console.log("finished!")
+      wrong = this.state.wrong + 1
+      this.setState({ wrong: wrong }, this.setIndex)
     }
   }
 
+  componentDidMount() {
+    this.setState({ deck: this.props.navigation.state.params.deck })
+  }
+
   render() {
-    const { cards, deck } = this.props
+    const { navigation } = this.props
+    const { deck } = navigation.state.params
     const { cardIndex } = this.state
+    const { cards } = deck
     const card = cards[cardIndex]
 
     return (
