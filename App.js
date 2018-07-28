@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Platform, StatusBar } from 'react-native'
+import { View, Platform, StatusBar, TouchableOpacity, Text } from 'react-native'
 import { Icon } from 'react-native-elements'
 import { TabNavigator, createStackNavigator, createBottomTabNavigator, HeaderBackButton} from 'react-navigation'
 import { blackOlive, white, green } from './utils/colors'
@@ -11,6 +11,7 @@ import Quiz from './components/quiz'
 import Score from './components/score'
 import AddCard from './components/AddCard'
 import AddDeck from './components/AddDeck'
+import { setLocalNotification } from './utils/api'
 
 function MyStatusBar ({backgroundColor, ...props}) {
   return (
@@ -43,16 +44,14 @@ const Tab = createBottomTabNavigator({
     screen: DeckStack,
     navigationOptions: {
         tabBarLabel:"Decks",
-        tabBarIcon: <Icon name="home" size={30} color="#900" />,
-        headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />
-
+        tabBarIcon: <Icon name="home" size={35} color="#900" />,
         }
   },
   AddDeck: {
     screen: AddDeck,
     navigationOptions: {
       tabBarLabel: "Add Deck",
-      tabBarIcon: <Icon name="add" size={30} color="#900" />
+      tabBarIcon: <Icon name="add" size={35} color="#900" />
     }
   }
 },
@@ -71,6 +70,10 @@ const Tab = createBottomTabNavigator({
 )
 
 export default class App extends React.Component {
+  componentDidMount() {
+    setLocalNotification()
+  }
+
   render() {
     return (
       <View style={{flex: 1}}>

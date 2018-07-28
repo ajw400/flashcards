@@ -17,7 +17,11 @@ export default class Deck extends Component {
           <Button
             backgroundColor={oliveBlack}
             title="Start Quiz"
-            onPress={() => navigation.navigate('Quiz', { deck: deck })}
+            onPress={() => {
+              if (deck.cards.length > 0) {
+                navigation.navigate('Quiz', { deck: deck })
+              } else { alert("No cards!") }
+            }}
           />
           <Button
               backgroundColor={green}

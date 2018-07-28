@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
+import { View } from 'react-native'
 import Flashcard from './flashcard'
+import { clearLocalNotifications, setLocalNotification } from '../utils/api'
 
 export default class Quiz extends Component{
   constructor(props) {
@@ -16,13 +18,21 @@ export default class Quiz extends Component{
   }
 
   setIndex() {
+    const { deck } = this.props.navigation.state.params
     const i = this.state.cardIndex + 1
     if (i < this.state.deck.cards.length) {
       this.setState({cardIndex: i})
     } else {
       score = this.state.right.toFixed(2) * 100 / this.state.deck.cards.length
-      console.log(score)
-      this.props.navigation.navigate('Score', { score: score })
+      this.props.navigation.navigate('Score', { score, deck })
+      this.setState({
+        cardIndex: 0,
+        right: 0,
+        wrong: 0,
+        deck: deck
+      })
+      clearLocalNotifications()
+      .then(setLocalNotification())
     }
   }
 

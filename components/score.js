@@ -4,13 +4,17 @@ import { Text, View, StyleSheet } from 'react-native'
 
 class Score extends Component {
   render() {
-    const { score } = this.props.navigation.state.params
+    const { score, deck } = this.props.navigation.state.params
     return (
       <View style={styles.center}>
         <Text style={styles.text}>Congratulations, your score is {score}!</Text>
         <Button
-          title="Continue"
-          onPress={() => this.props.navigation.popToTop()}
+          title="Restart Quiz"
+          onPress={() => this.props.navigation.navigate('Quiz', { deck })}
+        />
+        <Button
+          title="Back to Deck"
+          onPress={() => this.props.navigation.navigate('Deck', { deck })}
         />
       </View>
       )
