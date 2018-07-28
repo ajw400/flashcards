@@ -38,7 +38,6 @@ export default class Quiz extends Component{
 
   next(correct) {
     if (correct) {
-      console.log("correct")
       right = this.state.right + 1
       this.setState({ right: right }, this.setIndex)
     } else {

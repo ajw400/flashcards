@@ -10,3 +10,5 @@ yarn install
 yarn start
 
 Simulators are available for Android and Iphone, and the Expo app can be used to test on real mobile devices.
+
+This app has been tested on both Android and Iphone simulators.

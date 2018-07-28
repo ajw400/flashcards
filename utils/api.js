@@ -39,7 +39,6 @@ export function createNotification() {
 }
 
 export function setLocalNotification() {
-  console.log("setLocalNotification")
   AsyncStorage.getItem(CAL)
   .then(JSON.parse)
   .then((data) => {
@@ -70,7 +69,6 @@ export function setLocalNotification() {
 }
 
 export function clearLocalNotifications() {
-  console.log("clearLocalNotifications")
   return AsyncStorage.removeItem(CAL)
   .then(Notifications.cancelAllScheduledNotificationsAsync)
 }
